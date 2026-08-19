@@ -1,0 +1,17 @@
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if ! echo "$BRANCH" | grep -qE '^(main|feature/.+|config/.+)$'; then
+  echo "Nome de branch invalido: '$BRANCH'. Use: feature/NOME ou config/NOME"
+  exit 1
+fi
+
+./vendor/bin/phpstan analyse --memory-limit=256M
+if [ $? -ne 0 ]; then
+  echo "Larastan encontrou erros. Corrija antes de commitar."
+  exit 1
+fi
+
+./vendor/bin/pest
+if [ $? -ne 0 ]; then
+  echo "Testes falhando. Corrija antes de commitar."
+  exit 1
+fi
