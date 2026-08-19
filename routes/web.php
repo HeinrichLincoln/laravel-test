@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 })->middleware('auth');
+
+Route::get('/jogo-da-velha', function () {
+    return view('jogo-da-velha');
+})->middleware('auth');

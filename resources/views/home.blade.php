@@ -4,8 +4,8 @@
 <body>
     <h1>Jogos</h1>
     <ul>
-        <li>Jogo da Velha</li>
-        <li>Jogo da Memória</li>
+        <li><a href="/jogo-da-velha">Jogo da Velha</a></li>
+        <li><a href="/jogo-da-memoria">Jogo da Memória</a></li>
     </ul>
 </body>
 </html>
