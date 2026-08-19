@@ -37,7 +37,7 @@ O sistema consiste em uma tela de login, uma home com lista de jogos e dois jogo
 |---|---|---|---|
 | LEARN-1 | Configurar o projeto Laravel | config/LEARN-1 | ✅ Concluído |
 | LEARN-2 | Instalar todos os pacotes | config/LEARN-2 | ✅ Concluído |
-| LEARN-3 | Criar página de Login com TDD | feature/LEARN-3 | A fazer |
+| LEARN-3 | Criar página de Login com TDD | feature/LEARN-3 | ✅ Concluído |
 | LEARN-4 | Criar rota de logout | feature/LEARN-4 | A fazer |
 | LEARN-5 | Criar home com lista de jogos | feature/LEARN-5 | A fazer |
 | LEARN-6 | Criar Jogo da Velha | feature/LEARN-6 | A fazer |
@@ -204,3 +204,48 @@ git push -u origin config/LEARN-2
 |---|---|---|
 | `nunomaduro/larastan` abandonado | Pacote descontinuado | Usar `larastan/larastan` no lugar |
 | Commit bloqueado pelo Husky | Chave da aplicação não gerada | `php artisan key:generate` |
+
+---
+
+### LEARN-3 — Criar página de Login com TDD
+
+```bash
+# 1. Criar a branch
+git checkout main && git pull
+git checkout -b feature/LEARN-3
+
+# 2. Escrever os testes primeiro (TDD)
+# Criar tests/Feature/LoginTest.php
+
+# 3. Rodar os testes — devem falhar (red)
+./vendor/bin/pest
+
+# 4. Criar o FortifyServiceProvider
+# Criar app/Providers/FortifyServiceProvider.php
+# Registrar no bootstrap/providers.php
+
+# 5. Criar a view de login
+# Criar resources/views/auth/login.blade.php
+
+# 6. Criar o banco e rodar as migrations
+touch database/database.sqlite
+php artisan migrate
+
+# 7. Rodar os testes — devem passar (green)
+./vendor/bin/pest
+
+# 8. Commitar e subir
+git add .
+git commit -m "feat: add login view and test setup"
+git push origin HEAD
+```
+
+**Problemas encontrados:**
+
+| Problema | Causa | Solução |
+|---|---|---|
+| `FortifyServiceProvider` declarado duas vezes | Conteúdo colado no arquivo errado | Separar corretamente `bootstrap/providers.php` e `app/Providers/FortifyServiceProvider.php` |
+| `View [auth.login] not found` | View de login não existia | Criar `resources/views/auth/login.blade.php` |
+| `no such table: users` | Banco SQLite não tinha as tabelas nos testes | Adicionar `use RefreshDatabase` no `tests/TestCase.php` |
+| `database.sqlite` não existia | Arquivo do banco não criado | `touch database/database.sqlite` + `php artisan migrate` |
+| Push bloqueado pelo GitHub | Personal Access Token exposto em commit antigo | Revogar o token e permitir via secret scanning |
