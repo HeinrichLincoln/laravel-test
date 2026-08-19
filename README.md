@@ -1,3 +1,4 @@
+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
 # 🎮 Laravel Test — Projeto de Aprendizado
 
 Projeto criado para aprender Laravel e as ferramentas utilizadas no projeto real (CRM Concessionária), seguindo as mesmas regras técnicas e fluxo de trabalho.
