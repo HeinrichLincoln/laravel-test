@@ -35,8 +35,8 @@ O sistema consiste em uma tela de login, uma home com lista de jogos e dois jogo
 
 | ID | Tarefa | Branch | Status |
 |---|---|---|---|
-| LEARN-1 | Configurar o projeto Laravel | config/LEARN-1 | A fazer |
-| LEARN-2 | Instalar todos os pacotes | config/LEARN-2 | A fazer |
+| LEARN-1 | Configurar o projeto Laravel | config/LEARN-1 | ✅ Concluído |
+| LEARN-2 | Instalar todos os pacotes | config/LEARN-2 | ✅ Concluído |
 | LEARN-3 | Criar página de Login com TDD | feature/LEARN-3 | A fazer |
 | LEARN-4 | Criar rota de logout | feature/LEARN-4 | A fazer |
 | LEARN-5 | Criar home com lista de jogos | feature/LEARN-5 | A fazer |
@@ -150,3 +150,57 @@ git push -u origin main
 | Extensão PHP faltando | `ext-xml` não instalada | `apt-get install php8.3-xml -y` |
 | Autenticação GitHub falhou | GitHub não aceita senha comum | Usar Personal Access Token no lugar da senha |
 | Branch `main` não existia | Repositório iniciado do zero | `git checkout -b main && git push -u origin main` |
+
+---
+
+### LEARN-2 — Instalar todos os pacotes
+
+```bash
+# 1. Criar a branch
+git checkout main && git pull
+git checkout -b config/LEARN-2
+
+# 2. Instalar o PEST e plugin para Laravel
+composer require pestphp/pest --dev --with-all-dependencies
+./vendor/bin/pest --init
+composer require pestphp/pest-plugin-laravel --dev
+
+# 3. Instalar Livewire e Mary UI
+composer require livewire/livewire
+composer require robsontenorio/mary
+
+# 4. Instalar Laravel Fortify
+composer require laravel/fortify
+
+# 5. Instalar Larastan
+composer require larastan/larastan --dev
+
+# 6. Criar arquivo de configuração do Larastan
+cat > phpstan.neon << 'NEON'
+includes:
+    - vendor/larastan/larastan/extension.neon
+parameters:
+    paths:
+        - app/
+    level: 5
+NEON
+
+# 7. Instalar e configurar Husky
+npm install --save-dev husky
+npx husky init
+
+# 8. Gerar a chave da aplicação
+php artisan key:generate
+
+# 9. Commitar e subir
+git add .
+git commit -m "config: instalar pacotes"
+git push -u origin config/LEARN-2
+```
+
+**Problemas encontrados:**
+
+| Problema | Causa | Solução |
+|---|---|---|
+| `nunomaduro/larastan` abandonado | Pacote descontinuado | Usar `larastan/larastan` no lugar |
+| Commit bloqueado pelo Husky | Chave da aplicação não gerada | `php artisan key:generate` |
